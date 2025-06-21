@@ -2,6 +2,10 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import tipoDocumentoRoute from './routes/tipoDocumentoRoute';
 import especialidadesRoute from './routes/especialidadesRoute';
+import horariosRoute from './routes/horariosRoute';
+import pacientesRoute from './routes/pacientesRoute';
+import medicosRoute from './routes/medicosRoute';
+import citasRoute from './routes/citasRoute';
 import env from './config/env';
 
 /*
@@ -18,6 +22,10 @@ app.use(cors());
 //Rutas
 app.use(`${env.API_PREFIX}/tipo-documentos`, tipoDocumentoRoute);
 app.use(`${env.API_PREFIX}/especialidades`, especialidadesRoute);
+app.use(`${env.API_PREFIX}/horarios`, horariosRoute);
+app.use(`${env.API_PREFIX}/pacientes`, pacientesRoute);
+app.use(`${env.API_PREFIX}/medicos`, medicosRoute);
+app.use(`${env.API_PREFIX}/citas`, citasRoute);
 
 export default app;
 
