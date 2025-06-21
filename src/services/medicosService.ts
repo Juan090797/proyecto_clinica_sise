@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Medico } from "../models/medico";
+import { RESPONSE_DELETE_OK, RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
 
 const prisma = new PrismaClient();
 
@@ -26,7 +27,7 @@ export const obtenerMedico = async (id: number) => {
 
 export const insertarMedico = async (medico: Medico) => {
     console.log('medicosService::insertarMedico');
-    return await prisma.medicos.create({
+    await prisma.medicos.create({
         data: {
             nombres: medico.nombres,
             apellidos: medico.apellidos,
@@ -35,11 +36,12 @@ export const insertarMedico = async (medico: Medico) => {
             id_especialidad: medico.id_especialidad
         }
     });
+    return RESPONSE_INSERT_OK;
 }
 
 export const modificarMedico = async (id: number, medico: Medico) => {
     console.log('medicosService::modificarMedico');
-    return await prisma.medicos.update({
+    await prisma.medicos.update({
         where: {
             id_medico: id
         },
@@ -51,11 +53,12 @@ export const modificarMedico = async (id: number, medico: Medico) => {
             id_especialidad: medico.id_especialidad
         }
     });
+    return RESPONSE_UPDATE_OK;
 }
 
 export const eliminarMedico = async (id: number) => {
     console.log('medicosService::eliminarMedico');
-    return await prisma.medicos.update({
+    await prisma.medicos.update({
         where: {
             id_medico: id
         },
@@ -63,4 +66,5 @@ export const eliminarMedico = async (id: number) => {
             estado_auditoria: '0'
         }
     });
+    return RESPONSE_DELETE_OK;
 }

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Cita } from "../models/cita";
+import { RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
 
 const prisma = new PrismaClient();
 
@@ -26,7 +27,7 @@ export const obtenerCita = async (id: number) => {
 
 export const insertarCita = async (cita: Cita) => {
   console.log('citasService::insertarCita');
-  return await prisma.citas.create({
+  await prisma.citas.create({
     data: {
       id_paciente: cita.id_paciente,
       id_medico: cita.id_medico,
@@ -34,11 +35,12 @@ export const insertarCita = async (cita: Cita) => {
       hora: cita.hora
     }
   });
+  return RESPONSE_INSERT_OK;
 }
 
 export const modificarCita = async (id: number, cita: Cita) => {
   console.log('citasService::modificarCita');
-  return await prisma.citas.update({
+  await prisma.citas.update({
     where: {
       id_cita: id
     },
@@ -52,11 +54,13 @@ export const modificarCita = async (id: number, cita: Cita) => {
       fecha_actualizacion: new Date()
     }
   });
+
+  return RESPONSE_UPDATE_OK;
 }
 
 export const eliminarCita = async (id: number) => {
   console.log('citasService::eliminarCita');
-  return await prisma.citas.update({
+  await prisma.citas.update({
     where: {
       id_cita: id
     },
@@ -64,4 +68,6 @@ export const eliminarCita = async (id: number) => {
       estado_auditoria: '0'
     }
   });
+
+  return RESPONSE_INSERT_OK;
 }

@@ -71,5 +71,5 @@ export const eliminarTipoDocumento = async (id: number) => {
         }
     });
 
-    return "Eliminado satisfactoriamente";
+    return RESPONSE_DELETE_OK;
 }

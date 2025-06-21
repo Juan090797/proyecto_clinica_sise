@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Paciente } from "../models/paciente";
+import { RESPONSE_DELETE_OK, RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
 
 const prisma = new PrismaClient();
 
@@ -26,7 +27,7 @@ export const obtenerPaciente = async (id: number) => {
 
 export const insertarPaciente = async (paciente: Paciente) => {
   console.log('pacientesService::insertarPaciente');
-  return await prisma.pacientes.create({
+  await prisma.pacientes.create({
     data: {
       nombres: paciente.nombres,
       apellidos: paciente.apellidos,
@@ -39,11 +40,12 @@ export const insertarPaciente = async (paciente: Paciente) => {
       genero: paciente.genero
     }
   });
+  return RESPONSE_INSERT_OK;
 }
 
 export const modificarPaciente = async (id: number, paciente: Paciente) => {
   console.log('pacientesService::modificarPaciente');
-  return await prisma.pacientes.update({
+  await prisma.pacientes.update({
     where: {
       id_paciente: id
     },
@@ -59,11 +61,12 @@ export const modificarPaciente = async (id: number, paciente: Paciente) => {
       genero: paciente.genero
     }
   });
+  return RESPONSE_UPDATE_OK;
 }
 
 export const eliminarPaciente = async (id: number) => {
   console.log('pacientesService::eliminarPaciente');
-  return await prisma.pacientes.update({
+  await prisma.pacientes.update({
     where: {
       id_paciente: id
     },
@@ -71,4 +74,5 @@ export const eliminarPaciente = async (id: number) => {
       estado_auditoria: '0'
     }
   });
+  return RESPONSE_DELETE_OK;
 }
