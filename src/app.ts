@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import tipoDocumentoRoute from './routes/tipoDocumentoRoute';
+import especialidadesRoute from './routes/especialidadesRoute';
 import env from './config/env';
 
 /*
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 //Rutas
 app.use(`${env.API_PREFIX}/tipo-documentos`, tipoDocumentoRoute);
+app.use(`${env.API_PREFIX}/especialidades`, especialidadesRoute);
 
 export default app;
 
