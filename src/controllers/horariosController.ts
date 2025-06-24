@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import * as horariosService from "../services/horariosService";
 import { ResponseModel } from "../shared/responseModel";
-import { STATUS_INTERNAL_SERVER_ERROR } from "../shared/constants";
+import { STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR } from "../shared/constants";
+import { horarioCrearSchema } from "../schemas/horarioSchema";
 
-export const listarHorarios = async (req: Request, res: Response) => {
+export const listarHorarios = async (req: Request, res: Response): Promise<any>  => {
     console.log('horariosController::listarHorarios');
     try {
         const response = await horariosService.listarHorarios();
@@ -14,7 +15,7 @@ export const listarHorarios = async (req: Request, res: Response) => {
     }
 }
 
-export const obtenerHorario = async (req: Request, res: Response) => {
+export const obtenerHorario = async (req: Request, res: Response): Promise<any>  => {
     console.log('horariosController::obtenerHorario');
     try {
         const { id } = req.params;
@@ -26,8 +27,12 @@ export const obtenerHorario = async (req: Request, res: Response) => {
     }
 }
 
-export const insertarHorario = async (req: Request, res: Response) => {
+export const insertarHorario = async (req: Request, res: Response): Promise<any>  => {
     console.log('horariosController::insertarHorario');
+    const { error }: any = horarioCrearSchema.validate(req.body);
+    if (error) {
+        return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+    }
     try {
         const response = await horariosService.insertarHorario(req.body);
         res.json(ResponseModel.success(response));
@@ -37,7 +42,7 @@ export const insertarHorario = async (req: Request, res: Response) => {
     }
 }
 
-export const modificarHorario = async (req: Request, res: Response) => {
+export const modificarHorario = async (req: Request, res: Response): Promise<any>  => {
     console.log('horariosController::modificarHorario');
     try {
         const { id } = req.params;
@@ -49,7 +54,7 @@ export const modificarHorario = async (req: Request, res: Response) => {
     }
 }
 
-export const eliminarHorario = async (req: Request, res: Response) => {
+export const eliminarHorario = async (req: Request, res: Response): Promise<any>  => {
     console.log('horariosController::eliminarHorario');
     try {
         const { id } = req.params;

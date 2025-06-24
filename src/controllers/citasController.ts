@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import * as citasService from "../services/citasService";
 import { ResponseModel } from "../shared/responseModel";
-import { STATUS_INTERNAL_SERVER_ERROR } from "../shared/constants";
+import { STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR } from "../shared/constants";
+import { citaCrearSchema } from "../schemas/citaSchema";
 
-export const listarCitas = async (req: Request, res: Response) => {
+export const listarCitas = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::listarCitas');
   try {
     const response = await citasService.listarCitas();
@@ -14,7 +15,7 @@ export const listarCitas = async (req: Request, res: Response) => {
   }
 }
 
-export const obtenerCita = async (req: Request, res: Response) => {
+export const obtenerCita = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::obtenerCita');
   try {
     const { id } = req.params;
@@ -26,8 +27,12 @@ export const obtenerCita = async (req: Request, res: Response) => {
   }
 }
 
-export const insertarCita = async (req: Request, res: Response) => {
+export const insertarCita = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::insertarCita');
+    const { error }: any = citaCrearSchema.validate(req.body);
+    if(error){
+      return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+    }
   try {
     const response = await citasService.insertarCita(req.body);
     res.json(ResponseModel.success(response));
@@ -37,7 +42,7 @@ export const insertarCita = async (req: Request, res: Response) => {
   }
 }
 
-export const modificarCita = async (req: Request, res: Response) => {
+export const modificarCita = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::modificarCita');
   try {
     const { id } = req.params;
@@ -49,7 +54,7 @@ export const modificarCita = async (req: Request, res: Response) => {
   }
 }
 
-export const eliminarCita = async (req: Request, res: Response) => {
+export const eliminarCita = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::eliminarCita');
   try {
     const { id } = req.params;

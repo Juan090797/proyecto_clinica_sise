@@ -27,12 +27,16 @@ export const obtenerCita = async (id: number) => {
 
 export const insertarCita = async (cita: Cita) => {
   console.log('citasService::insertarCita');
+
+  const fecha = new Date(cita.fecha);
+  const hora = new Date(`1900-01-01T${cita.hora}:00Z`);
+
   await prisma.citas.create({
     data: {
       id_paciente: cita.id_paciente,
       id_medico: cita.id_medico,
-      fecha: cita.fecha,
-      hora: cita.hora
+      fecha,
+      hora
     }
   });
   return RESPONSE_INSERT_OK;
