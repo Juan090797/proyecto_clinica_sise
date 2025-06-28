@@ -1,7 +1,7 @@
 export interface TipoDocumento {
-  id_tipo_documento: number;
+  idTipoDocumento: number;
   nombre: string;
-  estado_auditoria: string | null;
-  fecha_creacion: Date | null;
-  fecha_actualizacion: Date | null;
+  estadoAuditoria: string | null;
+  fechaCreacion: Date | null;
+  fechaActualizacion: Date | null;
 }

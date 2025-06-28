@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, tipo_documentos } from "@prisma/client";
 import { TipoDocumento } from '../models/tipoDocumento';
 import { RESPONSE_DELETE_OK, RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
+import { fromPrismaTipoDocumento, toPrismaTipoDocumento } from "../mappers/tipoDocumento.mapper";
 
 
 const prisma = new PrismaClient();
@@ -8,7 +9,7 @@ const prisma = new PrismaClient();
 export const listarTipoDocumentos = async() =>{
     console.log('tipoDocumentoService::listarTipoDocumentos');
 
-    const tipoDocumentos: TipoDocumento[] = await prisma.tipo_documentos.findMany({
+    const tipoDocumentos: tipo_documentos[] = await prisma.tipo_documentos.findMany({
         where: {
             estado_auditoria: '1'
         },
@@ -17,13 +18,13 @@ export const listarTipoDocumentos = async() =>{
         }
     });
 
-    return tipoDocumentos;
+    return tipoDocumentos.map((tipoDocumento: tipo_documentos) => fromPrismaTipoDocumento(tipoDocumento));
 }
 
 export const obtenerTipoDocumento = async( id: number) => {
     console.log('tipoDocumentoService::obtenerTipoDocumento');
 
-    const tipoDocumento: TipoDocumento | null = await prisma.tipo_documentos.findUnique({
+    const tipoDocumento: tipo_documentos | null = await prisma.tipo_documentos.findUnique({
         where: {
             id_tipo_documento: id
         }
@@ -36,7 +37,7 @@ export const insertarTipoDocumento = async(tipoDocumento: TipoDocumento) => {
     console.log('tipoDocumentoService::insertarTipoDocumento');
 
     await prisma.tipo_documentos.create({
-        data: tipoDocumento
+        data: toPrismaTipoDocumento(tipoDocumento)
     });
 
     return RESPONSE_INSERT_OK;
