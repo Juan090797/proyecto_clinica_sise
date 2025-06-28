@@ -30,7 +30,7 @@ export const obtenerTipoDocumento = async( id: number) => {
         }
     });
 
-    return tipoDocumento;
+    return tipoDocumento ? fromPrismaTipoDocumento(tipoDocumento) : null;
 }
 
 export const insertarTipoDocumento = async(tipoDocumento: TipoDocumento) => {

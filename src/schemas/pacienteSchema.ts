@@ -21,17 +21,17 @@ export const pacienteCrearSchema = Joi.object({
       'number.integer': 'La edad debe ser un número entero.',
       'number.positive': 'La edad debe ser un número positivo.',
     }),
-  fecha_nacimiento: Joi.date().iso().optional()
+  fechaNacimiento: Joi.date().iso().optional()
     .messages({
       'date.base': 'La fecha de nacimiento debe ser válida.',
       'date.format': 'La fecha debe estar en formato ISO (YYYY-MM-DD).',
     }),
-  id_tipo_documento: Joi.number().integer().required()
+  idTipoDocumento: Joi.number().integer().required()
     .messages({
       'any.required': 'El tipo de documento es obligatorio.',
       'number.base': 'El tipo de documento debe ser un número entero.',
     }),
-  numero_documento: Joi.string().max(20).required()
+  numeroDocumento: Joi.string().max(20).required()
     .messages({
       'string.base': 'El número de documento debe ser texto.',
       'string.empty': 'El número de documento es obligatorio.',

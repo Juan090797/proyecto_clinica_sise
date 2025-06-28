@@ -1,15 +1,15 @@
 export interface Paciente {
-    id_paciente: number;
+    idPaciente: number;
     nombres: string;
     apellidos: string;
     edad: number;
-    fecha_nacimiento: Date;
-    id_tipo_documento: number;
-    numero_documento: string;
+    fechaNacimiento: Date;
+    idTipoDocumento: number;
+    numeroDocumento: string;
     direccion: string;
     correo: string;
     genero: string;
-    estado_auditoria: string;
-    fecha_creacion: Date;
-    fecha_actualizacion?: Date;
+    estadoAuditoria: string;
+    fechaCreacion?: Date;
+    fechaActualizacion?: Date;
 }

@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { especialidades, PrismaClient } from "@prisma/client";
 import { RESPONSE_DELETE_OK, RESPONSE_INSERT_OK, RESPONSE_UPDATE_OK } from "../shared/constants";
 import { Especialidad } from "../models/especialidad";
+import { fromPrismaEspecialidad, toPrismaEspecialidad } from "../mappers/especialidad.mapper";
 
 
 const prisma = new PrismaClient();
@@ -8,7 +9,7 @@ const prisma = new PrismaClient();
 export const listarEspecialidades = async() => {
     console.log('especialidadesService::listarEspecialidades');
 
-    const especialidades = await prisma.especialidades.findMany({
+    const especialidades: especialidades[] = await prisma.especialidades.findMany({
         where: {
             estado_auditoria: '1'
         },
@@ -17,35 +18,33 @@ export const listarEspecialidades = async() => {
         }
     });
 
-    return especialidades;
+    return especialidades.map((especialidad: especialidades) => fromPrismaEspecialidad(especialidad));
 }
 export const obtenerEspecialidad = async(id: number) => {
     console.log('especialidadesService::obtenerEspecialidades');
-    const especialidad = await prisma.especialidades.findUnique({
+    const especialidad: especialidades | null = await prisma.especialidades.findUnique({
         where: {
             id_especialidad: id
         }
     });
-    return especialidad;
+    return especialidad ? fromPrismaEspecialidad(especialidad) : null;
 }
 export const insertarEspecialidad = async(especialidad: Especialidad) => {
     console.log('especialidadesService::insertarEspecialidad');
     await prisma.especialidades.create({
-        data: {
-            nombre: especialidad.nombre
-        }
+        data: toPrismaEspecialidad(especialidad)
     });
     return RESPONSE_INSERT_OK;
 }
 export const modificarEspecialidad = async(id: number, especialidad: Especialidad) => {
     console.log('especialidadesService::modificarEspecialidades');
+    //crear el objeto
+    const dataActualizada = {...especialidad, fechaActualizacion: new Date()}
     await prisma.especialidades.update({
         where: {
             id_especialidad: id
         },
-        data: {
-            nombre: especialidad.nombre
-        }
+        data: toPrismaEspecialidad(dataActualizada)
     });
     return RESPONSE_UPDATE_OK;
 }
