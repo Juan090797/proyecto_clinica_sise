@@ -7,6 +7,7 @@ import pacientesRoute from './routes/pacientesRoute';
 import medicosRoute from './routes/medicosRoute';
 import citasRoute from './routes/citasRoute';
 import env from './config/env';
+import authRouter from './routes/authRouter';
 
 /*
     CONFIGURAR CONEXION A BD, RUTAS Y OTRAS COSAS DE LOS SERVICIOS
@@ -26,6 +27,7 @@ app.use(`${env.API_PREFIX}/horarios`, horariosRoute);
 app.use(`${env.API_PREFIX}/pacientes`, pacientesRoute);
 app.use(`${env.API_PREFIX}/medicos`, medicosRoute);
 app.use(`${env.API_PREFIX}/citas`, citasRoute);
+app.use(`${env.API_PREFIX}/auth`, authRouter);
 
 export default app;
 

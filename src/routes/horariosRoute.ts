@@ -1,12 +1,13 @@
 import express, { Router } from "express";
 import { eliminarHorario, insertarHorario, listarHorarios, modificarHorario, obtenerHorario } from "../controllers/horariosController";
+import { authMiddleware } from "../auth/auth.middleware";
 
 const router: Router = express.Router();
 
-router.get('/', listarHorarios);
-router.get('/:id', obtenerHorario);
-router.post('/', insertarHorario);
-router.put('/:id', modificarHorario);
-router.delete('/:id', eliminarHorario);
+router.get('/', authMiddleware, listarHorarios);
+router.get('/:id', authMiddleware, obtenerHorario);
+router.post('/', authMiddleware, insertarHorario);
+router.put('/:id', authMiddleware, modificarHorario);
+router.delete('/:id', authMiddleware, eliminarHorario);
 
 export default router;

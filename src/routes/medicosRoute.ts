@@ -6,13 +6,14 @@ import {
     modificarMedico, 
     obtenerMedico 
 } from "../controllers/medicosController";
+import { authMiddleware } from "../auth/auth.middleware";
 
 const router: Router = express.Router();
 
-router.get('/', listarMedicos);
-router.get('/:id', obtenerMedico);
-router.post('/', insertarMedico);
-router.put('/:id', modificarMedico);
-router.delete('/:id', eliminarMedico);
+router.get('/', authMiddleware, listarMedicos);
+router.get('/:id', authMiddleware, obtenerMedico);
+router.post('/', authMiddleware, insertarMedico);
+router.put('/:id', authMiddleware, modificarMedico);
+router.delete('/:id', authMiddleware, eliminarMedico);
 
 export default router;
