@@ -29,10 +29,10 @@ export const obtenerCita = async (req: Request, res: Response): Promise<any> => 
 
 export const insertarCita = async (req: Request, res: Response): Promise<any> => {
   console.log('citasController::insertarCita');
-    const { error }: any = citaCrearSchema.validate(req.body);
-    if(error){
-      return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
-    }
+  const { error }: any = citaCrearSchema.validate(req.body);
+  if (error) {
+    return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+  }
   try {
     const response = await citasService.insertarCita(req.body);
     res.json(ResponseModel.success(response));
