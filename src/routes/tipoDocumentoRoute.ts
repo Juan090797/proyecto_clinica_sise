@@ -6,6 +6,27 @@ import { authMiddleware } from "../auth/auth.middleware";
 
 const router: Router = express.Router();
 
+
+/** 
+ * @swagger
+ * tags:
+ *   - name: TipoDocumento
+ *     description: Gestion de tipos de documentos
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/tipo-documentos:
+ *   get:
+ *     summary: Listar todos los tipos de documento
+ *     tags: [TipoDocumento]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista obtenida correctamente
+ */
 router.get('/', authMiddleware, listarTipoDocumentos);
 router.get('/:id',authMiddleware, obtenerTipoDocumento);
 router.post('/', authMiddleware, insertarTipoDocumento);

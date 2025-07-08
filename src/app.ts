@@ -8,6 +8,8 @@ import medicosRoute from './routes/medicosRoute';
 import citasRoute from './routes/citasRoute';
 import env from './config/env';
 import authRouter from './routes/authRouter';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swagger';
 
 /*
     CONFIGURAR CONEXION A BD, RUTAS Y OTRAS COSAS DE LOS SERVICIOS
@@ -20,6 +22,9 @@ const app: Application = express();
 // Middleware para parsear JSON
 app.use(express.json());
 app.use(cors());
+
+app.use(`${env.API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 //Rutas
 app.use(`${env.API_PREFIX}/tipo-documentos`, tipoDocumentoRoute);
 app.use(`${env.API_PREFIX}/especialidades`, especialidadesRoute);
