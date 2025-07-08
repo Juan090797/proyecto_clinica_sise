@@ -1,4 +1,4 @@
-import express,{ Router } from "express";
+import express, { Router } from "express";
 import { eliminarTipoDocumento, insertarTipoDocumento, listarTipoDocumentos, modificarTipoDocumento, obtenerTipoDocumento } from "../controllers/tipoDocumentoController";
 import { authMiddleware } from "../auth/auth.middleware";
 
@@ -28,10 +28,100 @@ const router: Router = express.Router();
  *         description: Lista obtenida correctamente
  */
 router.get('/', authMiddleware, listarTipoDocumentos);
-router.get('/:id',authMiddleware, obtenerTipoDocumento);
+
+/**
+ * @swagger
+ * /api/v1/tipo-documentos/{id}:
+ *   get:
+ *     summary: Obtener un tipo de documento por ID
+ *     tags: [TipoDocumento]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del tipo de documento a obtener
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Tipo de documento obtenido correctamente
+ */
+router.get('/:id', authMiddleware, obtenerTipoDocumento);
+
+/**
+ * @swagger
+ * /api/v1/tipo-documentos:
+ *   post:
+ *     summary: Crear un nuevo tipo de documento
+ *     tags: [TipoDocumento]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Tipo de documento creado correctamente
+ */
 router.post('/', authMiddleware, insertarTipoDocumento);
-router.put('/:id',authMiddleware, modificarTipoDocumento);
-router.delete('/:id',authMiddleware, eliminarTipoDocumento);
+
+/**
+ * @swagger
+ * /api/v1/tipo-documentos/{id}:
+ *   put:
+ *     summary: Modificar un tipo de documento
+ *     tags: [TipoDocumento]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Tipo de documento modificado
+ */
+router.put('/:id', authMiddleware, modificarTipoDocumento);
+
+
+/**
+ * @swagger
+ * /api/v1/tipo-documentos/{id}:
+ *   delete:
+ *     summary: Eliminar un tipo de documento
+ *     tags: [TipoDocumento]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Eliminado correctamente
+ */
+router.delete('/:id', authMiddleware, eliminarTipoDocumento);
 
 
 export default router;
